@@ -1,0 +1,18 @@
+Nicole's Paints Version 7.0 11/26/22
+
+Fixed issues:
+- the smart
+- windows (used to be tabs)
+- select and move
+- n-sided polygon
+- error message when saving different file formats
+- logging
+- select and rotate
+
+Known issues:
+- Image loads in fully zoomed if a large image is loaded in
+
+
+Links: 
+Github: 
+https://github.com/nbrown6402/Paints

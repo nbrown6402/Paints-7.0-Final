@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+  This file is available and licensed under the following license:
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="vbox" prefHeight="416.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.paints.PaintController">
+    <children>
+        <MenuBar prefHeight="14.0" prefWidth="630.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#New" text="New">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#OpeningImage" onMenuValidation="#OpeningImage" text="Open…">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="saves" mnemonicParsing="false" onAction="#save" text="Save">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#SavingNewImage" text="Save As…">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                            </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#clearcanv" text="Revert">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#undo" text="Undo">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="U" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#redo" text="Redo">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></MenuItem>
+                        <RadioMenuItem fx:id="copy" mnemonicParsing="false" text="Copy">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="Type" />
+                            </toggleGroup>
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </RadioMenuItem>
+                  <RadioMenuItem fx:id="cutting" mnemonicParsing="false" text="Cut" toggleGroup="$Type" />
+                        <RadioMenuItem fx:id="paste" mnemonicParsing="false" text="Paste" toggleGroup="$Type">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></RadioMenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#r90" text="Rotate 90" />
+                        <MenuItem mnemonicParsing="false" onAction="#r180" text="Rotate 180" />
+                        <MenuItem mnemonicParsing="false" onAction="#r270" text="Rotate 270" />
+                  <MenuItem mnemonicParsing="false" onAction="#horizontal" text="Horizontal Flip" />
+                        <MenuItem mnemonicParsing="false" onAction="#vert" text="Vertical Flip" />
+                  <RadioMenuItem fx:id="srotate" mnemonicParsing="false" text="Section Rotate 180" toggleGroup="$Type" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#About" text="About Paints" />
+                        <MenuItem mnemonicParsing="false" onAction="#HELP" text="HELP!" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false">
+                    <graphic>
+                        <ColorPicker fx:id="colorPicker" prefHeight="33.0" prefWidth="125.0" />
+                    </graphic>
+                </Menu>
+                <Menu mnemonicParsing="false">
+                    <graphic>
+                        <TextField fx:id="brushSize" prefHeight="23.0" prefWidth="51.0" />
+                    </graphic>
+                </Menu>
+                <Menu mnemonicParsing="false">
+                    <graphic>
+                        <CheckBox fx:id="AutoSaveChecker" mnemonicParsing="false" onAction="#autoSave" text="AutoSave" />
+                    </graphic>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <ButtonBar prefHeight="25.0" prefWidth="1038.0">
+            <buttons>
+                <RadioButton fx:id="pencil" minWidth="46.0" mnemonicParsing="false" onMouseClicked="#pen" prefHeight="23.0" toggleGroup="$Type">
+                    <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@Draw.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Pencil" />
+                    </tooltip>
+                </RadioButton>
+                <RadioButton fx:id="eraser" minWidth="43.0" mnemonicParsing="false" onMouseClicked="#erase" prefHeight="23.0" toggleGroup="$Type">
+                    <graphic>
+                        <ImageView fitHeight="41.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@Eraser.jpg" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Eraser" />
+                    </tooltip>
+                </RadioButton>
+                <RadioButton fx:id="col" minWidth="35.0" mnemonicParsing="false" onMouseClicked="#dropper" prefHeight="23.0" toggleGroup="$Type">
+                    <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@ed.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Eye Dropper" />
+                    </tooltip>
+                </RadioButton>
+                <RadioButton fx:id="rect" minWidth="35.0" mnemonicParsing="false" onMouseClicked="#rectangle" prefHeight="23.0" toggleGroup="$Type">
+                    <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@rectangle.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Rectangle" />
+                    </tooltip>
+                </RadioButton>
+                <RadioButton fx:id="cork" minWidth="35.0" mnemonicParsing="false" onMouseClicked="#circle" prefHeight="23.0" toggleGroup="$Type">
+                    <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@circle.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Circle" />
+                    </tooltip>
+                </RadioButton>
+                <RadioButton fx:id="lin" minWidth="58.0" mnemonicParsing="false" onMouseClicked="#line" prefHeight="23.0" toggleGroup="$Type">
+                    <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@line.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <font>
+                        <Font size="10.0" />
+                    </font>
+                    <tooltip>
+                        <Tooltip text="Line" />
+                    </tooltip>
+                </RadioButton>
+                <RadioButton fx:id="obo" minWidth="35.0" mnemonicParsing="false" onMouseClicked="#oval" prefHeight="23.0" toggleGroup="$Type">
+                    <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@5-51343_oval-png-circle-with-border-png.jpg" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Oval" />
+                    </tooltip>
+                </RadioButton>
+                <RadioButton fx:id="sqar" minWidth="43.0" mnemonicParsing="false" onMouseClicked="#square" prefHeight="23.0" toggleGroup="$Type">
+                    <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@square.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Square" />
+                    </tooltip>
+                </RadioButton>
+                <RadioButton fx:id="dash" minWidth="43.0" mnemonicParsing="false" onMouseClicked="#dashedLine" prefHeight="23.0" toggleGroup="$Type">
+                    <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@dash.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Dashed line" />
+                    </tooltip>
+                </RadioButton>
+                <RadioButton fx:id="npoly" minWidth="43.0" mnemonicParsing="false" onMouseClicked="#npoly" prefHeight="23.0" toggleGroup="$Type">
+                    <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@np.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="npoly gon" />
+                    </tooltip>
+                </RadioButton>
+                <RadioButton fx:id="rr" minWidth="43.0" mnemonicParsing="false" onMouseClicked="#roundedRect" prefHeight="23.0" toggleGroup="$Type">
+                    <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@rr.jpg" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Rounded Rectangle" />
+                    </tooltip>
+                </RadioButton>
+            </buttons>
+        </ButtonBar>
+            <ScrollPane prefHeight="513.0" prefWidth="640.0">
+                <content>
+                    <Canvas fx:id="canv" height="321.0" width="1501.0" />
+                </content>
+            </ScrollPane>
+    </children>
+</VBox>
